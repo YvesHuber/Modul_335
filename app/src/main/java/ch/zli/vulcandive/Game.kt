@@ -5,8 +5,12 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+
 
 class Game: AppCompatActivity(), SensorEventListener {
 
@@ -18,6 +22,7 @@ class Game: AppCompatActivity(), SensorEventListener {
     private var spawntimer : Int = 0
     private var scoretext : TextView? = null
     private var score : Int = 0
+    private var myLayout: ConstraintLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +30,7 @@ class Game: AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.game)
         player =  Player(findViewById(R.id.player))
         scoretext = findViewById(R.id.count) as TextView
+        myLayout = findViewById(R.id.myLayout) as ConstraintLayout
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
@@ -69,8 +75,19 @@ class Game: AppCompatActivity(), SensorEventListener {
             spawnRock()
             spawntimer = 0
         }
+        for (rock in rockList){
+            rock.move()
+        }
     }
     fun spawnRock(){
+        var rock: Rock =  Rock(this);
+        rockList.add(rock)
+        //dieser code mit hilfe von https://stackoverflow.com/questions/28071349/the-specified-child-already-has-a-parent-you-must-call-removeview-on-the-chil
+        if (rock.getimg().getParent() != null) {
+            (rock.getimg().getParent() as ViewGroup).removeView(rock.getimg()) // <- fix
+        }
+
+        myLayout?.addView(rock.getimg())
 
     }
 
