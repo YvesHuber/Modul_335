@@ -1,12 +1,13 @@
 package ch.zli.vulcandive
 
+import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +23,7 @@ class Game: AppCompatActivity(), SensorEventListener {
     private var spawntimer : Int = 0
     private var scoretext : TextView? = null
     private var score : Int = 0
+    private var highscore : Int = 0
     private var myLayout: ConstraintLayout? = null
 
 
@@ -33,6 +35,14 @@ class Game: AppCompatActivity(), SensorEventListener {
         myLayout = findViewById(R.id.myLayout) as ConstraintLayout
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+
+        val sharedPreference = getSharedPreferences("data", Context.MODE_PRIVATE)
+        if (sharedPreference.getInt("highscore", 0) != null){
+            highscore = sharedPreference.getInt("highscore",0)
+            var highscoretext = findViewById(R.id.highscoretext) as TextView
+            highscoretext.text = "highscore: "+ highscore.toString()
+        }
+
 
 
     }
@@ -77,6 +87,13 @@ class Game: AppCompatActivity(), SensorEventListener {
         }
         for (rock in rockList){
             rock.move()
+            if (player?.let { rock.checkcollision(it) } == true){
+                val i = Intent(this, EndScreen::class.java)
+                i.putExtra("score", score)
+                startActivity(i)
+                finish();
+
+            }
         }
     }
     fun spawnRock(){
@@ -88,6 +105,8 @@ class Game: AppCompatActivity(), SensorEventListener {
         }
 
         myLayout?.addView(rock.getimg())
+        myLayout?.requestLayout();
+
 
     }
 

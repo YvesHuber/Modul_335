@@ -1,11 +1,15 @@
 package ch.zli.vulcandive
 
 import android.content.Context
+import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 
@@ -28,24 +32,46 @@ class Rock(context: Context) {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-
-
         // Create a ConstraintLayout in which to add the ImageView
         constraintLayout = ConstraintLayout(context).apply {
 
             // Add the ImageView to the layout.
             addView(image)
         }
+        // TODO: Kleine steine sind schneller als grosse
+        val scale: Int = (Math.random() * 400 + 200).roundToInt()
+        image.maxHeight = scale
+        image.maxWidth = scale
 
 
     }
 
     fun move() {
-        println(image.getY())
         image.setY(image.getY() + speed)
     }
     fun getimg(): ImageView {
         return image
+    }
+    fun checkcollision(player: Player):Boolean {
+        val playerimg = player.getImg()
+
+        //Dieser Code wurde mit hilfe von https://www.tutorialkart.com/kotlin-android/detect-collision-between-two-sprites-bitmaps-in-android-game/ geschrieben
+
+        val rockRect: Rect = Rect(image.x.toInt(), image.y.toInt(),
+            (image.x+image.width).toInt(), (image.y+image.height).toInt()
+        )
+        val playerRect: Rect = Rect(playerimg.x.toInt(),
+            playerimg.y.toInt(), (playerimg.x+playerimg.width -40).toInt(), (playerimg.y+playerimg.height -40).toInt()
+        )
+
+        if(rockRect.intersect(playerRect)){
+            println("Collided.")
+           return true
+        }else {
+            return false
+        }
+
+
     }
 
 }
