@@ -23,8 +23,8 @@ class Rock(context: Context) {
 
 
     init {
-        image.setX(Random.nextFloat() * 800 )
-        image.setY(0f)
+        image.setX(Random.nextFloat() * 1100 )
+        image.setY(-60f)
         image.setImageResource(R.drawable.rock)
         image.adjustViewBounds = true
         image.layoutParams = ViewGroup.LayoutParams(
@@ -42,6 +42,10 @@ class Rock(context: Context) {
         val scale: Int = (Math.random() * 400 + 200).roundToInt()
         image.maxHeight = scale
         image.maxWidth = scale
+        speed = (speed - scale * 0.087).toFloat()
+        if (speed <= 0){
+            speed = (Math.random() * 30 + 5).toFloat()
+        }
 
 
     }
@@ -61,7 +65,7 @@ class Rock(context: Context) {
             (image.x+image.width).toInt(), (image.y+image.height).toInt()
         )
         val playerRect: Rect = Rect(playerimg.x.toInt(),
-            playerimg.y.toInt(), (playerimg.x+playerimg.width -40).toInt(), (playerimg.y+playerimg.height -40).toInt()
+            playerimg.y.toInt(), (playerimg.x+playerimg.width -80).toInt(), (playerimg.y+playerimg.height -50).toInt()
         )
 
         if(rockRect.intersect(playerRect)){
@@ -70,6 +74,7 @@ class Rock(context: Context) {
         }else {
             return false
         }
+        //
 
 
     }
