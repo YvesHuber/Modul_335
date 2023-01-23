@@ -32,7 +32,7 @@ class Rock(context: Context) {
 
         constraintLayout = ConstraintLayout(context).apply{addView(image)}
         // Kleine steine sind schneller als grosse
-        val scale: Int = (Math.random() * 400 + 200).roundToInt()
+        val scale: Int = (Math.random() * 100 + 100).roundToInt()
         image.maxHeight = scale
         image.maxWidth = scale
         speed = (speed - scale * 0.087).toFloat()

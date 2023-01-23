@@ -28,7 +28,6 @@ class MainMenu : AppCompatActivity() {
 
     //Spiel Beenden
     fun quitGame(){
-
         finish();
         System.exit(0);
     }
