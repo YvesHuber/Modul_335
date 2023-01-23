@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import ch.zli.vulcandive.Model.Player
+import ch.zli.vulcandive.Model.Rock
 
 
 class Game: AppCompatActivity(), SensorEventListener {

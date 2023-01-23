@@ -1,14 +1,11 @@
-package ch.zli.vulcandive
+package ch.zli.vulcandive.Model
 
 import android.content.Context
 import android.graphics.Rect
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import kotlin.math.max
-import kotlin.math.min
+import ch.zli.vulcandive.R
 import kotlin.math.roundToInt
 import kotlin.random.Random
 

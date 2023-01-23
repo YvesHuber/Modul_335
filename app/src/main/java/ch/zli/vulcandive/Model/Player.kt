@@ -1,4 +1,4 @@
-package ch.zli.vulcandive
+package ch.zli.vulcandive.Model
 
 import android.widget.ImageView
 
