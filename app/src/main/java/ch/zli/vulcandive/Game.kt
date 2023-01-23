@@ -75,8 +75,8 @@ class Game: AppCompatActivity(), SensorEventListener {
 
     //Spieler Bewegen je nach Sensoren Daten
     fun movePlayer(event: SensorEvent){
-        player?.moveX(event.values[1].toInt() * 100)
-        player?.moveY(event.values[0].toInt() * 100)
+        player?.moveX(event.values[1].toInt() * 300)
+        player?.moveY(event.values[0].toInt() * 300)
     }
 
     //Spiele Loop für Punkte und Gegner Spawnen
@@ -85,25 +85,16 @@ class Game: AppCompatActivity(), SensorEventListener {
         score++
         scoreText?.text = "score: " +score.toString()
 
-        if(spawnTimer >= 10){
+        if(spawnTimer >= 7){
             spawnRock()
             spawnTimer = 0
             repeats++
             if(repeats == 3){
                 repeats++
                 spawnRock()
-                spawnRock()
-                spawnRock()
             }
             if (repeats == 10){
                 repeats++
-                spawnRock()
-                spawnRock()
-                spawnRock()
-                spawnRock()
-                spawnRock()
-                spawnRock()
-                spawnRock()
                 spawnRock()
                 spawnRock()
             }
