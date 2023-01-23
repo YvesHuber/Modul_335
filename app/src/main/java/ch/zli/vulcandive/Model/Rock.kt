@@ -2,7 +2,9 @@ package ch.zli.vulcandive.Model
 
 import android.content.Context
 import android.graphics.Rect
+import android.graphics.drawable.AnimationDrawable
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ch.zli.vulcandive.R
@@ -19,7 +21,9 @@ class Rock(context: Context) {
     init {
         image.setX(Random.nextFloat() * 1100 )
         image.setY(-60f)
-        image.setImageResource(R.drawable.rock)
+        image.setBackgroundResource(R.drawable.enemyanimation)
+        val frameAnimation = image.background as AnimationDrawable
+        frameAnimation.start()
         image.adjustViewBounds = true
         image.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
