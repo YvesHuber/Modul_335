@@ -1,10 +1,28 @@
 package ch.zli.vulcandive.Model
 
+import android.graphics.drawable.AnimationDrawable
+import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import ch.zli.vulcandive.R
+import kotlin.math.roundToInt
+import kotlin.random.Random
 
 class Player(image:ImageView) {
 
     private var image: ImageView = image
+
+
+    init {
+
+        image.setBackgroundResource(R.drawable.playeranimation)
+        val frameAnimation = image.background as AnimationDrawable
+        frameAnimation.start()
+
+
+
+    }
+
 
     //-1 for flip
     //Move Player on X and Y
