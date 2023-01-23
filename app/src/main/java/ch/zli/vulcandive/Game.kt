@@ -22,8 +22,9 @@ class Game: AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var gyro: Sensor? = null
     private var rockList : ArrayList<Rock> = ArrayList()
-    private var spawntimer : Int = 0
-    private var scoretext : TextView? = null
+    private var spawnTimer : Int = 0
+    private var repeats : Int = 0
+    private var scoreText : TextView? = null
     private var score : Int = 0
     private var highscore : Int = 0
     private var myLayout: ConstraintLayout? = null
@@ -33,7 +34,7 @@ class Game: AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game)
         player =  Player(findViewById(R.id.player))
-        scoretext = findViewById(R.id.count) as TextView
+        scoreText = findViewById(R.id.count) as TextView
         myLayout = findViewById(R.id.myLayout) as ConstraintLayout
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
@@ -45,8 +46,6 @@ class Game: AppCompatActivity(), SensorEventListener {
             highscoretext.text = "highscore: "+ highscore.toString()
         }
 
-
-
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
@@ -55,8 +54,8 @@ class Game: AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         // Do something with this sensor data.
-        updategamestate()
-        moveplayer((event))
+        updateGameState()
+        movePlayer((event))
 
 
     }
@@ -73,23 +72,46 @@ class Game: AppCompatActivity(), SensorEventListener {
         sensorManager.unregisterListener(this)
     }
 
-    fun moveplayer(event: SensorEvent){
+
+    //Spieler Bewegen je nach Sensoren Daten
+    fun movePlayer(event: SensorEvent){
         player?.moveX(event.values[1].toInt() * 100)
         player?.moveY(event.values[0].toInt() * 100)
     }
 
-    fun updategamestate(){
-        spawntimer++
+    //Spiele Loop für Punkte und Gegner Spawnen
+    fun updateGameState(){
+        spawnTimer++
         score++
-        scoretext?.text = "score: " +score.toString()
+        scoreText?.text = "score: " +score.toString()
 
-        if(spawntimer >= 5){
+        if(spawnTimer >= 10){
             spawnRock()
-            spawntimer = 0
+            spawnTimer = 0
+            repeats++
+            if(repeats == 3){
+                repeats++
+                spawnRock()
+                spawnRock()
+                spawnRock()
+            }
+            if (repeats == 10){
+                repeats++
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+                spawnRock()
+            }
+
         }
         for (rock in rockList){
             rock.move()
-            if (player?.let { rock.checkcollision(it) } == true){
+            if (player?.let { rock.checkCollision(it) } == true){
                 val i = Intent(this, EndScreen::class.java)
                 i.putExtra("score", score)
                 startActivity(i)
@@ -98,6 +120,8 @@ class Game: AppCompatActivity(), SensorEventListener {
             }
         }
     }
+
+    //Gegner erstellen und der rockList hinzufügen
     fun spawnRock(){
         var rock: Rock =  Rock(this);
         rockList.add(rock)
@@ -105,11 +129,8 @@ class Game: AppCompatActivity(), SensorEventListener {
         if (rock.getimg().getParent() != null) {
             (rock.getimg().getParent() as ViewGroup).removeView(rock.getimg()) // <- fix
         }
-
         myLayout?.addView(rock.getimg())
         myLayout?.requestLayout();
-
-
     }
 
 }

@@ -19,11 +19,14 @@ class MainMenu : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    //Activity wechseln
     fun startGame(view: View){
         startActivity(Intent(this,Game::class.java))
         finish();
 
     }
+
+    //Spiel Beenden
     fun quitGame(){
 
         finish();

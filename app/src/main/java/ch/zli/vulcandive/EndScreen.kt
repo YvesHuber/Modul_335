@@ -49,11 +49,10 @@ class EndScreen : AppCompatActivity() {
 
     }
 
+
+    //Notification abschicken
     fun sendNotification(){
-
         createNotificationChannel();
-
-        // Create an explicit intent for an Activity in your app
         val intent = Intent(this, MainMenu::class.java).apply {}
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val sharedPreference = getSharedPreferences("data", Context.MODE_PRIVATE)
@@ -77,6 +76,10 @@ class EndScreen : AppCompatActivity() {
         }
     }
 
+
+    //createNotificationChannel wurde von der Android Studio Dokumentation Kopiert
+    //https://developer.android.com/develop/ui/views/notifications/build-notification#Priority
+
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -94,8 +97,8 @@ class EndScreen : AppCompatActivity() {
         }
     }
 
-
-    fun replay(view: View){
+    //Activity wechseln
+    fun restart(view: View){
         val i = Intent(this, MainMenu::class.java)
         i.putExtra("score", score)
         startActivity(i)

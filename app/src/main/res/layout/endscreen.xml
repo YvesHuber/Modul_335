@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="309dp"
         android:background="@color/red_200"
-        android:onClick="replay"
+        android:onClick="restart"
         android:text="Play Again"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"

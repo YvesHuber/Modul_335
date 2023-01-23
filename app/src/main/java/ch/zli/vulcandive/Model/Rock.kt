@@ -16,9 +16,6 @@ class Rock(context: Context) {
     private var speed: Float = (Math.random() * 70 + 25).toFloat()
     private lateinit var constraintLayout: ConstraintLayout
 
-
-
-
     init {
         image.setX(Random.nextFloat() * 1100 )
         image.setY(-60f)
@@ -29,13 +26,8 @@ class Rock(context: Context) {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        // Create a ConstraintLayout in which to add the ImageView
-        constraintLayout = ConstraintLayout(context).apply {
-
-            // Add the ImageView to the layout.
-            addView(image)
-        }
-        // TODO: Kleine steine sind schneller als grosse
+        constraintLayout = ConstraintLayout(context).apply{addView(image)}
+        // Kleine steine sind schneller als grosse
         val scale: Int = (Math.random() * 400 + 200).roundToInt()
         image.maxHeight = scale
         image.maxWidth = scale
@@ -53,7 +45,7 @@ class Rock(context: Context) {
     fun getimg(): ImageView {
         return image
     }
-    fun checkcollision(player: Player):Boolean {
+    fun checkCollision(player: Player):Boolean {
         val playerimg = player.getImg()
 
         //Dieser Code wurde mit hilfe von https://www.tutorialkart.com/kotlin-android/detect-collision-between-two-sprites-bitmaps-in-android-game/ geschrieben
